@@ -1,53 +1,15 @@
-try:
-	import sys
-	import hashlib
-	import urllib2
-	import getopt
-	from os import path
-	from urllib import urlencode
-	from re import search, findall
-	from random import seed, randint
-	from base64 import decodestring, encodestring
-	from cookielib import LWPCookieJar
-except:
-	print """
-Execution error:
-
-  You required some basic Python libraries. 
-  
-  This application use: sys, hashlib, urllib, urllib2, os, re, random, getopt, base64 and cookielib.
-
-  Please, check if you have all of them installed in your system.
-
-"""
-	sys.exit(1)
-
-try:
-	from httplib2 import Http
-except:
-	print """
-Execution error:
-
-  The Python library httplib2 is not installed in your system. 
-  
-  Please, install it before use this application.
-
-"""
-	sys.exit(1)
-	
-try:
-	from libxml2 import parseDoc
-except:
-	print """
-Execution error:
-
-  The Python library libxml2 is not installed in your system. 
-  
-  Because of that, some plugins aren't going to work correctly.
-  
-  Please, install it before use this application.
-
-"""
+import sys
+import hashlib
+import urllib2
+import getopt
+from os import path
+from urllib import urlencode
+from re import search, findall
+from random import seed, randint
+from base64 import decodestring, encodestring
+from cookielib import LWPCookieJar
+from httplib2 import Http
+from libxml2 import parseDoc
 
 ########################################################################################################
 ### CONSTANTS
@@ -85,25 +47,11 @@ class MY_ADDR:
 	name = 		"Alpha"
 	url = 		""
 	supported_algorithm = [MD5]
-	
-	def isSupported (self, alg):
-		"""Return True if HASHCRACK can crack this type of algorithm and
-		False if it cannot."""
-		
-		if alg in self.supported_algorithm:
-			return True
-		else:
-			return False
-
 
 	def crack (self, hashvalue, alg):
 		"""Try to crack the hash.
 		@param hashvalue Hash to crack.
 		@param alg Algorithm to crack."""
-		
-		# Check if the cracker can crack this kind of algorithm
-		if not self.isSupported (alg):
-			return None
 		
 		# Build the URL
 		url = "http://md5.my-addr.com/md5_decrypt-md5_cracker_online/md5_decoder_tool.php"
@@ -259,10 +207,6 @@ def crackHash (algorithm, hashvalue=None, hashfile=None):
 	# Is the hash cracked?
 	cracked = False
 	
-	# Only one of the two possible inputs can be setted.
-	if (not hashvalue and not hashfile) or (hashvalue and hashfile):
-		return False
-	
 	# hashestocrack depends on the input value
 	hashestocrack = None
 	if hashvalue:
@@ -291,10 +235,6 @@ def crackHash (algorithm, hashvalue=None, hashfile=None):
 			
 			# Select the cracker
 			cr = CRACKERS[ (i+begin)%len(CRACKERS) ]()
-			
-			# Check if the cracker support the algorithm
-			if not cr.isSupported ( algorithm ):
-				continue
 			
 			# Analyze the hash
 			print "Cracking using %s %s" % (cr.name, cr.url)
@@ -529,5 +469,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
