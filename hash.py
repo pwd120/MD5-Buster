@@ -105,7 +105,7 @@ class MD5DECRYPTION:
 			return None
 		
 		# Build the URL
-		url = self.url
+		url = "http://md5decryption.com"
 		
 		# Build the parameters
 		params = { "hash" : hashvalue,
