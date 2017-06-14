@@ -30,5 +30,7 @@ try:
             purl = urlopen(url).read()
             if len(purl) > 0:
                 print "\n\033[1;32mHash cracked by Gamma:\033[1;m", purl
+            else:
+            	print "\033[1;31mSorry this hash is not present in our database.\033[1;m"
 except len(hashvalue) == 0:
 	print "Empty Input"
