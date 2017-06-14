@@ -12,7 +12,10 @@ try:
     data = urlencode({"hash":hashvalue,"submit":"Decrypt It!"})
     html = urlopen("http://md5decryption.com", data)
     find = html.read()
-    match = search(r"Decrypted Text: </b>[^<]*</font>", find)    
+    match = search(r"Decrypted Text: </b>[^<]*</font>", find)
+    if len(hashvalue) != 0:
+    	print "\033[1;31m[Error] Invalid MD5 hash\033[1;m"
+    	exit()
     if match:
     	print "\n\033[1;32mHash cracked by Alpha:\033[1;m", match.group().split('b>')[1][:-7]
     else:
