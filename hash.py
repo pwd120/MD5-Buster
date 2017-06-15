@@ -7,13 +7,14 @@ print """\033[1;97m   _  _ ___   ___   ___  _  _ ____ ___ ____ ____
    |  | |__/  __/   |__] |__| ___]  |  |___ |  \\ v0.3\033[1;m"""
 print "\t\033[1;32m  Servers Loaded: Alpha, Delta, Gamma\033[1;m"
 print((56 * '\033[31m-\033[1;m'))
-hashvalue = raw_input('\033[97mEnter your MD5 hash: \033[1;m')
+hashvalue1 = raw_input('\033[97mEnter your MD5 hash: \033[1;m')
+hashvalue = hashvalue1.lower()
 try:
     data = urlencode({"hash":hashvalue,"submit":"Decrypt It!"})
     html = urlopen("http://md5decryption.com", data)
     find = html.read()
     match = search(r"Decrypted Text: </b>[^<]*</font>", find)
-    if len(hashvalue) != 0:
+    if len(hashvalue) != 32:
     	print "\033[1;31m[Error] Invalid MD5 hash\033[1;m"
     	exit()
     if match:
